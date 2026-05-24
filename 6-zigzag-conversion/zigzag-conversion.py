@@ -1,23 +1,22 @@
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
-        if numRows == 1 or numRows >= len(s):
+
+        if numRows == 1:
             return s
 
-        rows = [""] * numRows
+        res = ""
+        cycle = 2 * (numRows - 1)
 
-        curRow = 0
-        direction = 1
+        for row in range(numRows):
 
-        for char in s:
+            for j in range(row, len(s), cycle):
 
-            rows[curRow] += char
+                res += s[j]
 
-            # Change direction
-            if curRow == 0:
-                direction = 1
-            elif curRow == numRows - 1:
-                direction = -1
+                # middle rows get one extra character
+                diag = j + cycle - 2 * row
 
-            curRow += direction
+                if 0 < row < numRows - 1 and diag < len(s):
+                    res += s[diag]
 
-        return "".join(rows)
+        return res
